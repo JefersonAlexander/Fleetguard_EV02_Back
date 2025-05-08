@@ -3,10 +3,9 @@ package com.microservice.fleetLocation.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.microservice.fleetLocation.entity.Fleet;
-import com.microservice.fleetLocation.entity.User;
 
-@Data
+
+@Data 
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransportUnitDTO {
@@ -14,8 +13,8 @@ public class TransportUnitDTO {
     private Long id;
     private String licence; 
     private Long model; 
-    private User driver;
-    private Fleet fleet; 
+    private Long driverId; 
+    private Long fleetId;  
     private boolean isActive; 
     
 }

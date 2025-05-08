@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 @Table(name = "transport_units")
 public class TransportUnit {
 

@@ -12,6 +12,7 @@ public class FleetService {
     
     private final FleetRepository fleetRepository;
     private final FleetMapper fleetMapper;  
+    
 
     @Autowired
     public FleetService(FleetRepository fleetRepository, FleetMapper fleetMapper) {
