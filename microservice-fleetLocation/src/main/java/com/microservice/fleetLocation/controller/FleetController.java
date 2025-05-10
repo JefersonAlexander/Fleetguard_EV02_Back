@@ -1,16 +1,11 @@
 package com.microservice.fleetLocation.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.microservice.fleetLocation.DTO.FleetDTO;
 import com.microservice.fleetLocation.service.FleetService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.http.HttpStatus;
 
 
 @RestController
@@ -29,10 +24,5 @@ public class FleetController {
         return ResponseEntity.ok(fleetFacade.getAllFleets());
     }
 
-    // Create a new fleet
-    @PostMapping
-    public ResponseEntity<FleetDTO> createFleet(@RequestBody FleetDTO fleetDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(fleetFacade.createFleet(fleetDTO));
-    }
 }
 

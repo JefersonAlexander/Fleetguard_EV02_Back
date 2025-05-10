@@ -6,14 +6,15 @@ import  com.microservice.fleetLocation.mapper.TransportUnitMapper;
 import com.microservice.fleetLocation.repository.FleetRepository;
 import  com.microservice.fleetLocation.repository.TransportUnitRepository;
 import com.microservice.fleetLocation.repository.UserRepository;
-
 import jakarta.persistence.EntityNotFoundException;
-
+import jakarta.transaction.Transactional;
 import com.microservice.fleetLocation.DTO.TransportUnitDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 
 @Service
@@ -24,31 +25,31 @@ public class TransportUnitService {
     private final UserRepository userRepository;
     private final FleetRepository fleetRepository;
     
+    
     @Autowired
     public TransportUnitService(TransportUnitRepository transportUnitRepository, 
-        TransportUnitMapper transportUnitMapper, UserRepository userRepository, FleetRepository fleetRepository) {
-        
-        this.transportUnitRepository = transportUnitRepository; 
+                                 TransportUnitMapper transportUnitMapper,
+                                 UserRepository userRepository,
+                                 FleetRepository fleetRepository) {
+        this.transportUnitRepository = transportUnitRepository;
         this.transportUnitMapper = transportUnitMapper;
         this.userRepository = userRepository;
         this.fleetRepository = fleetRepository;
+     
     }
     
-    // get all transport units
     public List<TransportUnitDTO> getAllTransportUnits() {
-
-        return  transportUnitRepository.findAll().stream().map(transportUnitMapper :: toDTO).toList();
-    }
+    return transportUnitRepository.findAllByDeletedFalse().stream().map(transportUnitMapper::toDTO).toList();
+   }
 
 
     // create a transport unit
-
-    public TransportUnitDTO createTransportUnit(TransportUnitDTO transportUnitDTO) {
+    public TransportUnitDTO createTransportUnit(TransportUnitDTO transportUnitDTO) { 
     
         User driver = userRepository.findById(transportUnitDTO.getDriverId())
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + transportUnitDTO.getDriverId()));
 
-       Fleet fleet = fleetRepository.findById(transportUnitDTO.getFleetId())
+        Fleet fleet = fleetRepository.findById(transportUnitDTO.getFleetId())
         .orElseThrow(() -> new EntityNotFoundException("Fleet not found with id: " + transportUnitDTO.getFleetId()));
         
         TransportUnit transportUnitToSave = transportUnitMapper.toEntity(transportUnitDTO); 
@@ -56,44 +57,54 @@ public class TransportUnitService {
         transportUnitToSave.setDriver(driver);  
         transportUnitToSave.setFleet(fleet);  
 
-        TransportUnit savedTransportUnit = transportUnitRepository.save(transportUnitToSave);     
+        TransportUnit savedTransportUnit = transportUnitRepository.save(transportUnitToSave);
+        
 
         return  transportUnitMapper.toDTO(savedTransportUnit);
     } 
 
+
     // update a transport unit
     public TransportUnitDTO editTransportUnit(Long id, TransportUnitDTO transportUnitDTO) {
-        
         TransportUnit transportUnitToUpdate = transportUnitRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Transport unit not found with id: " + id));
 
-        
-        if (transportUnitDTO.getDriverId() != null) {
-            User driver = userRepository.findById(transportUnitDTO.getDriverId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + transportUnitDTO.getDriverId()));
-            transportUnitToUpdate.setDriver(driver);
+
+        if (!Objects.equals(transportUnitDTO.getLicencePlate(), transportUnitToUpdate.getLicencePlate())) {
+            throw new UnsupportedOperationException("The licence plate cannot be modified. It must remain the same.");
         }
 
-        if (transportUnitDTO.getFleetId() != null) {
-            Fleet fleet = fleetRepository.findById(transportUnitDTO.getFleetId())
-                .orElseThrow(() -> new EntityNotFoundException("Fleet not found with id: " + transportUnitDTO.getFleetId()));
-            transportUnitToUpdate.setFleet(fleet);
-        }
+        User driver = userRepository.findById(transportUnitDTO.getDriverId())
+            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + transportUnitDTO.getDriverId()));
+        transportUnitToUpdate.setDriver(driver); 
 
-        if (transportUnitDTO.getLicence() != null) {
-            transportUnitToUpdate.setLicence(transportUnitDTO.getLicence());
-        }
-        if (transportUnitDTO.getModel() != null) {
-            transportUnitToUpdate.setModel(transportUnitDTO.getModel());
-        }
-        if (transportUnitDTO.isActive() != transportUnitToUpdate.isActive()) {
-            transportUnitToUpdate.setActive(transportUnitDTO.isActive());
-        }
+       
+        Fleet fleet = fleetRepository.findById(transportUnitDTO.getFleetId())
+            .orElseThrow(() -> new EntityNotFoundException("Fleet not found with id: " + transportUnitDTO.getFleetId()));
+        transportUnitToUpdate.setFleet(fleet);
+
+        transportUnitToUpdate.setModel(transportUnitDTO.getModel());
+        transportUnitToUpdate.setActive(transportUnitDTO.getActive());
+        transportUnitToUpdate.setLicencePlate(transportUnitDTO.getLicencePlate());
 
         TransportUnit updatedTransportUnit = transportUnitRepository.save(transportUnitToUpdate);
 
         return transportUnitMapper.toDTO(updatedTransportUnit);
     }
 
+
+    
+    @Transactional
+    public TransportUnitDTO logicallyDeleteTransportUnit(Long id) {
+        
+        TransportUnit transportUnitToUpdate = transportUnitRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Transport unit not found with id: " + id));
+
+        transportUnitToUpdate.setDeleted(true);
+
+        TransportUnit updatedTransportUnit = transportUnitRepository.save(transportUnitToUpdate);
+
+        return transportUnitMapper.toDTO(updatedTransportUnit);
+    }
 }
 
