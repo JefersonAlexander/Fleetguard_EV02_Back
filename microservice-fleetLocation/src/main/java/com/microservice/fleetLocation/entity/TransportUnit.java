@@ -1,12 +1,11 @@
 package com.microservice.fleetLocation.entity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.envers.Audited;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
 
 
 @Entity
@@ -28,22 +27,23 @@ public class TransportUnit {
     @Column(nullable = false)
     private Long model;
 
+    @Column(nullable = false)
+    private Long capacity;
+
     @ManyToOne
-    @NotNull(message = "Driver is required")
     @JoinColumn(name = "user_id", nullable = false)
     private User driver;
 
     @ManyToOne 
-    @NotNull(message = "Fleet is required")
     @JoinColumn(name = "fleet_id", nullable = false) 
     private Fleet fleet; 
     
-    @NotNull(message = "Active status is required")
-    @Column(name = "is_active", nullable = false) 
-    private boolean isActive;
     
-    @NotNull(message = "Deleted status is required") 
-    @Column(name = "deleted", nullable = false) 
+    @Column(nullable = false) 
+    private boolean active;
+    
+    
+    @Column(nullable = false) 
     private boolean deleted;
     
 }

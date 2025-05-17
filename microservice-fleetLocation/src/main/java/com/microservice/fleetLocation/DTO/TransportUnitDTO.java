@@ -28,6 +28,11 @@ public class TransportUnitDTO {
     @Min(value = 1000, message = "The model must be a positive number of 4 digits")
     @Max(value = 9999, message = "Model must be a 4-digit number")
     private Long model; 
+
+    @NotNull(message = "Capacity is required")
+    @Min(value = 1, message = "Capacity must be a positive number")
+    @Max(value = 100, message = "Capacity must be a 3-digit number")
+    private Long capacity;
      
     @Positive(message = "Driver ID must be a positive number")
     @NotNull(message = "Driver ID is required")

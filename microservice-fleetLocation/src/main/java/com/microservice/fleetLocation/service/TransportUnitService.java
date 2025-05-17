@@ -7,12 +7,12 @@ import com.microservice.fleetLocation.repository.FleetRepository;
 import  com.microservice.fleetLocation.repository.TransportUnitRepository;
 import com.microservice.fleetLocation.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import com.microservice.fleetLocation.DTO.TransportUnitDTO;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class TransportUnitService {
     
+    @Autowired
     private final TransportUnitRepository transportUnitRepository; 
     private final TransportUnitMapper  transportUnitMapper;
     private final UserRepository userRepository;
     private final FleetRepository fleetRepository;
     
-    
-    @Autowired
+
     public TransportUnitService(TransportUnitRepository transportUnitRepository, 
                                  TransportUnitMapper transportUnitMapper,
                                  UserRepository userRepository,
@@ -37,7 +37,8 @@ public class TransportUnitService {
         this.fleetRepository = fleetRepository;
      
     }
-    
+
+    // get a transport units
     public List<TransportUnitDTO> getAllTransportUnits() {
     return transportUnitRepository.findAllByDeletedFalse().stream().map(transportUnitMapper::toDTO).toList();
    }
@@ -71,7 +72,7 @@ public class TransportUnitService {
 
 
         if (!Objects.equals(transportUnitDTO.getLicencePlate(), transportUnitToUpdate.getLicencePlate())) {
-            throw new UnsupportedOperationException("The licence plate cannot be modified. It must remain the same.");
+            throw new UnsupportedOperationException("The licence plate cannot be modified.");
         }
 
         User driver = userRepository.findById(transportUnitDTO.getDriverId())
@@ -84,6 +85,7 @@ public class TransportUnitService {
         transportUnitToUpdate.setFleet(fleet);
 
         transportUnitToUpdate.setModel(transportUnitDTO.getModel());
+        transportUnitToUpdate.setCapacity(transportUnitDTO.getCapacity());
         transportUnitToUpdate.setActive(transportUnitDTO.getActive());
         transportUnitToUpdate.setLicencePlate(transportUnitDTO.getLicencePlate());
 
@@ -94,7 +96,7 @@ public class TransportUnitService {
 
 
     
-    @Transactional
+     // Delete logical a transport unit 
     public TransportUnitDTO logicallyDeleteTransportUnit(Long id) {
         
         TransportUnit transportUnitToUpdate = transportUnitRepository.findById(id)

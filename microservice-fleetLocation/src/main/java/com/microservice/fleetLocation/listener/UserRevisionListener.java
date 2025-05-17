@@ -1,15 +1,15 @@
 package com.microservice.fleetLocation.listener;
 
-import com.microservice.fleetLocation.entity.UserRevisionEntity;
+import com.microservice.fleetLocation.entity.UserAuditEntity;
 import org.hibernate.envers.RevisionListener;
 
 
 public class UserRevisionListener implements RevisionListener{
      @Override
     public void newRevision(Object revisionEntity) {
-        UserRevisionEntity customRev = (UserRevisionEntity) revisionEntity;
+        UserAuditEntity userAuditEntity = (UserAuditEntity) revisionEntity;
         String username = getCurrentUsername();
-        customRev.setUsername(username);
+        userAuditEntity.setUsername(username);
     }
 
     private String getCurrentUsername() {

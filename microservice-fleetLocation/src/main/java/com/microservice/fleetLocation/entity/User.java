@@ -26,11 +26,4 @@ public class User {
     @Column(nullable = false, length = 50, unique = true) 
     private String email;
     
-   
-    @Column(nullable = false, length = 100)
-    private String password;
-
-    @Column(name = "role_id", nullable = false)
-    private Long roleId; 
-
 }
