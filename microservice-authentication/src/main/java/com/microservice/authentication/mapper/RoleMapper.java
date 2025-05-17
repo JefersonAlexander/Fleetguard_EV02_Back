@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 import com.microservice.authentication.DTO.RoleDTO;
 import com.microservice.authentication.entity.Role;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RoleMapper {
     RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
     RoleDTO toDTO (Role role);
