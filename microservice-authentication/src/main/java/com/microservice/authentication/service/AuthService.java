@@ -1,7 +1,6 @@
 package com.microservice.authentication.service;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,29 +46,24 @@ public class AuthService {
 
     @Transactional
     public LoginResponse login (LoginRequest request) {
-        var user = userRepository.findByEmail(request.getEmail());
+        var user = userRepository.findByEmail(request.getEmail())
+            .orElse(null);
 
-        if (user == null || !BCrypt.checkpw(request.getPassword(), user.get().getHashedPassword())) {
+        if (user == null || !BCrypt.checkpw(request.getPassword(), user.getHashedPassword())) {
             return null;
         }
 
-        String token = generateToken(user.get());
+        String token = generateToken(user);
 
-        LoginResponse response = new LoginResponse();
-        response.setEmail(user.get().getEmail());
-        response.setToken(token);
-
-        return response;
+        return new LoginResponse(user.getEmail(), token);
     }
 
     public String generateToken (User user) {  
         byte[] signingKey = jwtKey.getBytes(StandardCharsets.UTF_8);
 
-        Role role = user.getRole();
-        List<String> permissions = role.getPermissions()
-                                        .stream()
-                                        .map(Permission::getPermissionName)
-                                        .collect(Collectors.toList());
+        List<String> permissions = user.getRole().getPermissions().stream()
+            .map(Permission::getPermissionName)
+            .collect(Collectors.toList());
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", user.getUserId().toString());
@@ -81,25 +75,29 @@ public class AuthService {
         Date expiration = new Date(now.getTime() + durationMinutes * 60 * 1000);
 
         return Jwts.builder()
-                    .setClaims(claims)
-                    .setIssuedAt(now)
-                    .setExpiration(expiration)
-                    .signWith(SignatureAlgorithm.HS256, signingKey)
-                    .compact();
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(expiration)
+            .signWith(SignatureAlgorithm.HS256, signingKey)
+            .compact();
     }
 
     @Transactional
     public UserDTO register (RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Email already registered");
+        }
+
         Role role = roleRepository.findByRoleName(request.getRoleName())
-                                    .orElseThrow(() -> new IllegalArgumentException("Role does not exist"));
+            .orElseThrow(() -> new IllegalArgumentException("Role does not exist"));
         
         User user = new User();
         user.setUserName(request.getUserName());
         user.setEmail(request.getEmail());
         user.setHashedPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
         user.setRole(role);
+        
         userRepository.save(user);
-
         return userMapper.toDTO(user);
     }
 }
