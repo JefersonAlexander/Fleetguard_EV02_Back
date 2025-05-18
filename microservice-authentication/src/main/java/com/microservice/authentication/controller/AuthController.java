@@ -13,6 +13,8 @@ import com.microservice.authentication.DTO.RegisterRequest;
 import com.microservice.authentication.DTO.UserDTO;
 import com.microservice.authentication.service.AuthService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -23,24 +25,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register (@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register (@RequestBody @Valid RegisterRequest request) {
         try {
-            UserDTO result = authService.register(request);
-            return ResponseEntity.ok(result);
+            UserDTO userDTO = authService.register(request);
+            return ResponseEntity.ok(userDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login (@RequestBody LoginRequest request) {
-        LoginResponse result  = authService.login(request);
-
-        if (result == null) {
+    public ResponseEntity<?> login (@RequestBody @Valid LoginRequest request) {
+        LoginResponse response = authService.login(request);
+        if (response == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                                     .body("Incorrect credentials.");
         }
-
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(response);
     }
 }
