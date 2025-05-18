@@ -22,7 +22,7 @@ import lombok.Setter;
 @Table(name = "permissions")
 public class Permission {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long permissionId;
     @Column(nullable = false)
     private String permissionName;

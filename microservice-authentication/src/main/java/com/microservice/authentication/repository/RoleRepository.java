@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.microservice.authentication.entity.Role;
 
+
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>{
-    Optional<Role> findByRoleName(String roleName);
+    Optional<Role>  findByRoleId(Long roleId);
 }

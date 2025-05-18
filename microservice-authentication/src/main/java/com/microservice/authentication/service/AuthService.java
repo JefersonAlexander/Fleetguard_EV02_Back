@@ -88,8 +88,8 @@ public class AuthService {
             throw new IllegalArgumentException("Email already registered");
         }
 
-        Role role = roleRepository.findByRoleName(request.getRoleName())
-            .orElseThrow(() -> new IllegalArgumentException("Role does not exist"));
+       Role role = roleRepository.findById(request.getRoleId())  
+        .orElseThrow(() -> new IllegalArgumentException("Role does not exist"));
         
         User user = new User();
         user.setUserName(request.getUserName());

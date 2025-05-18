@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long roleId;
     @Column(nullable = false)
     private String roleName;
