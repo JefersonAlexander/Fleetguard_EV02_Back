@@ -17,5 +17,4 @@ public class UserDTO {
     @NotBlank(message = "Email is required")
     private String email; 
 
-    private Long roleId; 
 }

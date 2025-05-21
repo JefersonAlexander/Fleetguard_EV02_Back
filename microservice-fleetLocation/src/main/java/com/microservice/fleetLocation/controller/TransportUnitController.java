@@ -36,8 +36,8 @@ public class TransportUnitController {
     // Create a new transport unit
     @PostMapping("/create")
     public ResponseEntity<TransportUnitDTO> createTransportUnit(@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
+      
         return ResponseEntity.status(HttpStatus.CREATED).body(transportUnitFacade.createTransportUnit(transportUnitDTO));
-
     }
 
     // Update a transport unit

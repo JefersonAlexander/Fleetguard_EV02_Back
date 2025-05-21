@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class FleetService {
     
+    @Autowired
     private final FleetRepository fleetRepository;
     private final FleetMapper fleetMapper;  
     
-
-    @Autowired
     public FleetService(FleetRepository fleetRepository, FleetMapper fleetMapper) {
         this.fleetRepository = fleetRepository;
         this.fleetMapper = fleetMapper;
