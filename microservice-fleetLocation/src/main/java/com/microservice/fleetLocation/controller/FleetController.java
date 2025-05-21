@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/api/fleet")
+@RequestMapping("/api/fleetLocation/fleet")
 public class FleetController {
     
     private final FleetService fleetFacade;

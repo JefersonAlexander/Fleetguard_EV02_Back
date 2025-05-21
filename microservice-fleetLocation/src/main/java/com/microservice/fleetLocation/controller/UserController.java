@@ -11,7 +11,7 @@ import com.microservice.fleetLocation.DTO.UserDTO;
 import com.microservice.fleetLocation.service.UserService;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/fleetLocation/user")
 public class UserController {
 
     private final UserService userFacade;

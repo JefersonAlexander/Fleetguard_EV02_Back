@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/transportUnit")
+@RequestMapping("/api/fleetLocation/transportUnit")
 public class TransportUnitController {
     
     private final TransportUnitService transportUnitFacade;
