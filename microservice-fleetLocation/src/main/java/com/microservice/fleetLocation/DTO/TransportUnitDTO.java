@@ -25,9 +25,7 @@ public class TransportUnitDTO {
     private String licencePlate; 
 
     @NotNull(message = "Model is required")
-    @Min(value = 1000, message = "The model must be a positive number of 4 digits")
-    @Max(value = 9999, message = "Model must be a 4-digit number")
-    private Long model; 
+    private String model; 
 
     @NotNull(message = "Capacity is required")
     @Min(value = 1, message = "Capacity must be a positive number")
@@ -42,9 +40,9 @@ public class TransportUnitDTO {
     @NotNull(message = "Fleet ID is required")
     private Long fleetId;
 
-    @NotNull(message = "Active status is required")
-    private Boolean active;
-
+    @NotNull(message = "Status is required")
+    private Long statusId;
+    
     @JsonIgnore
     private Boolean deleted;
     

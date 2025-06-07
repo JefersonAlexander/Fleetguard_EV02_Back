@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.microservice.fleetLocation.DTO.TransportUnitDTO;
+import com.microservice.fleetLocation.DTO.TransportUnitDetailDTO;
 import com.microservice.fleetLocation.service.TransportUnitService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,7 @@ public class TransportUnitController {
 
     // Get all transport units
     @GetMapping 
-    public ResponseEntity<List<TransportUnitDTO>> getAllTransportUnits() {
+    public ResponseEntity<List<TransportUnitDetailDTO>> getAllTransportUnits() {
         return ResponseEntity.ok(transportUnitFacade.getAllTransportUnits());
     }
 
