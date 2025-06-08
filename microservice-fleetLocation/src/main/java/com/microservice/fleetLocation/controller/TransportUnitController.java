@@ -1,7 +1,6 @@
 package com.microservice.fleetLocation.controller;
 
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.microservice.fleetLocation.DTO.TransportUnitDTO;
 import com.microservice.fleetLocation.DTO.TransportUnitDetailDTO;
 import com.microservice.fleetLocation.service.TransportUnitService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;  
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+@Tag(name = "Transport Units", description = "Endpoints para gestionar unidades de transporte")
 @RestController
 @RequestMapping("/api/fleetLocation/transportUnit")
 public class TransportUnitController {
@@ -29,12 +30,14 @@ public class TransportUnitController {
     }
 
     // Get all transport units
+    @Operation(summary = "Obtener unidades de transporte", description = "Obtener todas las unidades de transporte")
     @GetMapping 
     public ResponseEntity<List<TransportUnitDetailDTO>> getAllTransportUnits() {
         return ResponseEntity.ok(transportUnitFacade.getAllTransportUnits());
     }
 
     // Create a new transport unit
+    @Operation(summary = "Crear unidad de transporte", description = "Crear una nueva unidad de transporte")
     @PostMapping("/create")
     public ResponseEntity<TransportUnitDetailDTO> createTransportUnit(@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
       
@@ -42,11 +45,14 @@ public class TransportUnitController {
     }
 
     // Update a transport unit
+    @Operation(summary = "Actualizar unidad de transporte", description = "Actualizar una unidad de transporte existente porun ID")
     @PutMapping("/update/{id}")
     public ResponseEntity<TransportUnitDTO> updateTransportUnit(@PathVariable Long id,@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
         return ResponseEntity.ok(transportUnitFacade.editTransportUnit(id, transportUnitDTO));
     } 
-
+    
+    //Delete a transport unit logically
+    @Operation(summary = "Eliminar unidad de transporte", description = "Eliminar una unidad de transporte de forma lógica por ID")
     @PatchMapping("/delete/{id}")
     public ResponseEntity<TransportUnitDTO> logicallyDelete(@PathVariable Long id) {
         TransportUnitDTO updatedDTO = transportUnitFacade.logicallyDeleteTransportUnit(id);
