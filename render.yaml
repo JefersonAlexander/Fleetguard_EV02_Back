@@ -22,15 +22,15 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: JWT_SECRET
-        fromSecret: jwt-secret
+        fromSecret: ${jwt-secret}
       - key: JWT_EXPIRATION
-        value: 1440
+        fromSecret: ${jwt-expiration}
       - key: SPRING_DATASOURCE_URL
-        fromSecret: auth-db-url
+        fromSecret: ${auth-db-url}
       - key: SPRING_DATASOURCE_USERNAME
-        fromSecret: auth-db-user
+        fromSecret: ${auth-db-user}
       - key: SPRING_DATASOURCE_PASSWORD
-        fromSecret: auth-db-pass
+        fromSecret: ${auth-db-pass}
     autoDeploy: false
 
   - type: web
@@ -45,11 +45,11 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: SPRING_DATASOURCE_URL
-        fromSecret: fleet-db-url
+        fromSecret: ${fleet-db-url}
       - key: SPRING_DATASOURCE_USERNAME
-        fromSecret: fleet-db-user
+        fromSecret: ${fleet-db-user}
       - key: SPRING_DATASOURCE_PASSWORD
-        fromSecret: fleet-db-pass
+        fromSecret: ${fleet-db-pass}
     autoDeploy: false
 
   - type: web
@@ -64,5 +64,5 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: JWT_SECRET
-        fromSecret: jwt-secret
+        fromSecret: ${jwt-secret}
     autoDeploy: false
