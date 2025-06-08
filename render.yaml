@@ -21,8 +21,7 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: EUREKA_URI
-        value: http://discovery-server:8761/eureka
+      
     autoDeploy: false
 
   - type: web
@@ -34,8 +33,6 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: EUREKA_URI
-        value: http://discovery-server:8761/eureka
     autoDeploy: false
 
   - type: web
@@ -47,8 +44,6 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: EUREKA_URI   
-        value: http://discovery-server:8761/eureka
       
     autoDeploy: false
 
