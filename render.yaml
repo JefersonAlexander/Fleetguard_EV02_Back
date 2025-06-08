@@ -1,0 +1,86 @@
+services:
+  - type: web
+    name: discovery-server
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/discovery-server:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    autoDeploy: false
+
+  - type: web
+    name: microservice-authentication
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/microservice-authentication:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: EUREKA_URI
+        value: https://discovery-server.onrender.com/eureka
+      - key: JWT_SECRET
+        value: ZXN0YWVzbGFjb250cmFzZW5hZG
+      - key: JWT_EXPIRATION
+        value: 1
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: elephant-auth
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: elephant-auth
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: elephant-auth
+          property: password
+    autoDeploy: false
+
+  - type: web
+    name: microservice-fleetLocation
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/microservice-fleetlocation:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: EUREKA_URI
+        value: https://discovery-server.onrender.com/eureka
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: elephant-fleet
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: elephant-fleet
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: elephant-fleet
+          property: password
+    autoDeploy: false
+
+  - type: web
+    name: api-gateway
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/api-gateway:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: EUREKA_URI
+        value: https://discovery-server.onrender.com/eureka
+      - key: JWT_SECRET
+        value: ZXN0YWVzbGFjb250cmFzZW5hZGVsYW1hcmNhcGFyYWVsdG9rZW4=
+    autoDeploy: false
+
+databases:
+  - name: elephant-auth
+    plan: free
+  - name: elephant-fleet
+    plan: free

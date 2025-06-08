@@ -28,7 +28,7 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/api/fleetLocation/fleet").permitAll()   
+                .pathMatchers("/api/auth/login", "/api/auth/register","/api/fleetLocation/fleet").permitAll()
                 .anyExchange().authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt
