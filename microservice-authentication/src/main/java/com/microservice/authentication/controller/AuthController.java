@@ -13,17 +13,23 @@ import com.microservice.authentication.DTO.RegisterRequest;
 import com.microservice.authentication.DTO.UserDTO;
 import com.microservice.authentication.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+@Tag(name = "Autenticación", description = "Endpoints para login y registro de usuarios")
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
-
+    
+        
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-
+    
+    @Operation(summary = "Registro de usuario", description = "Crea un nuevo usuario en el sistema")
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody @Valid RegisterRequest request) {
         try {
@@ -33,7 +39,8 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    
+    @Operation(summary = "Login de usuario", description = "Autentica al usuario y devuelve un JWT")
     @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody @Valid LoginRequest request) {
         LoginResponse response = authService.login(request);
