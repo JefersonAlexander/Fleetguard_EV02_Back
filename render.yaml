@@ -22,21 +22,15 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: JWT_SECRET
-        value: ZXN0YWVzbGFjb250cmFzZW5hZG
+        fromSecret: jwt-secret
       - key: JWT_EXPIRATION
-        value: 1
+        value: 1440
       - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: elephant-auth
-          property: connectionString
+        fromSecret: auth-db-url
       - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: elephant-auth
-          property: user
+        fromSecret: auth-db-user
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: elephant-auth
-          property: password
+        fromSecret: auth-db-pass
     autoDeploy: false
 
   - type: web
@@ -51,17 +45,11 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: SPRING_DATASOURCE_URL
-        fromDatabase:
-          name: elephant-fleet
-          property: connectionString
+        fromSecret: fleet-db-url
       - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: elephant-fleet
-          property: user
+        fromSecret: fleet-db-user
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: elephant-fleet
-          property: password
+        fromSecret: fleet-db-pass
     autoDeploy: false
 
   - type: web
@@ -76,11 +64,5 @@ services:
       - key: EUREKA_URI
         value: https://discovery-server.onrender.com/eureka
       - key: JWT_SECRET
-        value: ZXN0YWVzbGFjb250cmFzZW5hZGVsYW1hcmNhcGFyYWVsdG9rZW4=
+        fromSecret: jwt-secret
     autoDeploy: false
-
-databases:
-  - name: elephant-auth
-    plan: free
-  - name: elephant-fleet
-    plan: free
