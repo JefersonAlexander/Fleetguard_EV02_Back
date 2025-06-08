@@ -1,3 +1,5 @@
+# render.yaml - Limpio de datos sensibles
+
 services:
   - type: web
     name: discovery-server
@@ -20,17 +22,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: EUREKA_URI
-        value: https://discovery-server.onrender.com/eureka
-      - key: JWT_SECRET
-        fromSecret: ${jwt-secret}
-      - key: JWT_EXPIRATION
-        fromSecret: ${jwt-expiration}
-      - key: SPRING_DATASOURCE_URL
-        fromSecret: ${auth-db-url}
-      - key: SPRING_DATASOURCE_USERNAME
-        fromSecret: ${auth-db-user}
-      - key: SPRING_DATASOURCE_PASSWORD
-        fromSecret: ${auth-db-pass}
+        value: http://discovery-server:8761/eureka
     autoDeploy: false
 
   - type: web
@@ -43,13 +35,7 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: EUREKA_URI
-        value: https://discovery-server.onrender.com/eureka
-      - key: SPRING_DATASOURCE_URL
-        fromSecret: ${fleet-db-url}
-      - key: SPRING_DATASOURCE_USERNAME
-        fromSecret: ${fleet-db-user}
-      - key: SPRING_DATASOURCE_PASSWORD
-        fromSecret: ${fleet-db-pass}
+        value: http://discovery-server:8761/eureka
     autoDeploy: false
 
   - type: web
@@ -61,8 +47,8 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: EUREKA_URI
-        value: https://discovery-server.onrender.com/eureka
-      - key: JWT_SECRET
-        fromSecret: ${jwt-secret}
+      - key: EUREKA_URI   
+        value: http://discovery-server:8761/eureka
+      
     autoDeploy: false
+
