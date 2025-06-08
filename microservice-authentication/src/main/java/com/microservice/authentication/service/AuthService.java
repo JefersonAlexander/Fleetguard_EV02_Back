@@ -29,6 +29,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class AuthService {
+    @Autowired
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
@@ -37,7 +38,7 @@ public class AuthService {
     @Value("${jwt.durationMinutes}")
     private int durationMinutes;
 
-    @Autowired
+
     public AuthService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
