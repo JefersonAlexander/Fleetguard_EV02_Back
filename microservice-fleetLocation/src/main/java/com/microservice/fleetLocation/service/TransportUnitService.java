@@ -50,23 +50,27 @@ public class TransportUnitService {
 
 
     // create a transport unit
-    public TransportUnitDTO createTransportUnit(TransportUnitDTO transportUnitDTO) { 
+    public TransportUnitDetailDTO createTransportUnit(TransportUnitDTO transportUnitDTO) { 
     
         User driver = userRepository.findById(transportUnitDTO.getDriverId())
         .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + transportUnitDTO.getDriverId()));
 
         Fleet fleet = fleetRepository.findById(transportUnitDTO.getFleetId())
         .orElseThrow(() -> new EntityNotFoundException("Fleet not found with id: " + transportUnitDTO.getFleetId()));
+
+        TransportUnitStatus status = transportUnitStatusRepository.findById(transportUnitDTO.getStatusId())
+            .orElseThrow(() -> new EntityNotFoundException("Status not found with id: " + transportUnitDTO.getStatusId()));
         
         TransportUnit transportUnitToSave = transportUnitMapper.toEntity(transportUnitDTO); 
 
         transportUnitToSave.setDriver(driver);  
         transportUnitToSave.setFleet(fleet);  
+        transportUnitToSave.setStatus(status);
 
         TransportUnit savedTransportUnit = transportUnitRepository.save(transportUnitToSave);
         
 
-        return  transportUnitMapper.toDTO(savedTransportUnit);
+        return  transportUnitMapper.toDetailDTO(savedTransportUnit);
     } 
 
 
