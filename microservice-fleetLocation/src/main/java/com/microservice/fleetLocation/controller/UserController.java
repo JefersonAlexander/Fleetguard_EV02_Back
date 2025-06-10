@@ -22,7 +22,7 @@ public class UserController {
     }
 
     // Get all users
-    @Operation(summary = "Obtener conductores", description = "Obtener todos los conductores")
+    @Operation(summary = "Obtener conductores", description = "Se obtienen en una lista todos los conductores")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userFacade.getAllUsers());

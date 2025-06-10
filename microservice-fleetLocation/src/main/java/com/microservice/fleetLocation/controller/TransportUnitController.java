@@ -30,14 +30,14 @@ public class TransportUnitController {
     }
 
     // Get all transport units
-    @Operation(summary = "Obtener unidades de transporte", description = "Obtener todas las unidades de transporte")
+    @Operation(summary = "Obtener unidades de transporte", description = "Se obtiene una lista con todas las unidades de transporte")
     @GetMapping 
     public ResponseEntity<List<TransportUnitDetailDTO>> getAllTransportUnits() {
         return ResponseEntity.ok(transportUnitFacade.getAllTransportUnits());
     }
 
     // Create a new transport unit
-    @Operation(summary = "Crear unidad de transporte", description = "Crear una nueva unidad de transporte")
+    @Operation(summary = "Crear unidad de transporte", description = "Se crea una nueva unidad de transporte")
     @PostMapping("/create")
     public ResponseEntity<TransportUnitDetailDTO> createTransportUnit(@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
       
@@ -45,17 +45,18 @@ public class TransportUnitController {
     }
 
     // Update a transport unit
-    @Operation(summary = "Actualizar unidad de transporte", description = "Actualizar una unidad de transporte existente porun ID")
+    @Operation(summary = "Actualizar unidad de transporte", description = "Se actualiza una unidad de transporte existente por ID")
     @PutMapping("/update/{id}")
-    public ResponseEntity<TransportUnitDTO> updateTransportUnit(@PathVariable Long id,@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
-        return ResponseEntity.ok(transportUnitFacade.editTransportUnit(id, transportUnitDTO));
-    } 
-    
-    //Delete a transport unit logically
-    @Operation(summary = "Eliminar unidad de transporte", description = "Eliminar una unidad de transporte de forma lógica por ID")
-    @PatchMapping("/delete/{id}")
-    public ResponseEntity<TransportUnitDTO> logicallyDelete(@PathVariable Long id) {
-        TransportUnitDTO updatedDTO = transportUnitFacade.logicallyDeleteTransportUnit(id);
-        return ResponseEntity.ok(updatedDTO);
+    public ResponseEntity<TransportUnitDetailDTO> updateTransportUnit(@PathVariable Long id,@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
+        return ResponseEntity.ok(transportUnitFacade.updateTransportUnit(id, transportUnitDTO));
     }
+
+    //Delete a transport unit logically
+    @Operation(summary = "Eliminar unidad de transporte", description = "Se eliminar una unidad de transporte de forma lógica por ID")
+    @PatchMapping("/delete/{id}")
+    public ResponseEntity<Void> logicallyDelete(@PathVariable Long id) {
+        transportUnitFacade.logicallyDeleteTransportUnit(id);
+        return ResponseEntity.noContent().build(); 
+    }
+
 }

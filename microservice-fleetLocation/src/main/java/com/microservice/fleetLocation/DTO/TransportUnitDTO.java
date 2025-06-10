@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransportUnitDTO {
     
-    private Long id;
-
     @NotBlank(message = "Licence is required")
     @Size(max = 8, message = "Licence cannot exceed 8 characters")
     private String licencePlate; 

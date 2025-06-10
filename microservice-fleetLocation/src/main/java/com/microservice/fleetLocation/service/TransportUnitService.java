@@ -75,7 +75,7 @@ public class TransportUnitService {
 
 
     // update a transport unit
-    public TransportUnitDTO editTransportUnit(Long id, TransportUnitDTO transportUnitDTO) {
+    public TransportUnitDetailDTO updateTransportUnit(Long id, TransportUnitDTO transportUnitDTO) {
         TransportUnit transportUnitToUpdate = transportUnitRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Transport unit not found with id: " + id));
 
@@ -104,22 +104,20 @@ public class TransportUnitService {
 
         TransportUnit updatedTransportUnit = transportUnitRepository.save(transportUnitToUpdate);
 
-        return transportUnitMapper.toDTO(updatedTransportUnit);
+        return transportUnitMapper.toDetailDTO(updatedTransportUnit);
     }
 
 
     
-     // Delete logical a transport unit 
-    public TransportUnitDTO logicallyDeleteTransportUnit(Long id) {
-        
-        TransportUnit transportUnitToUpdate = transportUnitRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Transport unit not found with id: " + id));
+    
+   // Delete logical a transport unit 
+    public void logicallyDeleteTransportUnit(Long id) {
+    TransportUnit transportUnit = transportUnitRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Unidad de transporte no encontrada con id: " + id));
 
-        transportUnitToUpdate.setDeleted(true);
-
-        TransportUnit updatedTransportUnit = transportUnitRepository.save(transportUnitToUpdate);
-
-        return transportUnitMapper.toDTO(updatedTransportUnit);
+    transportUnit.setDeleted(true);
+    transportUnitRepository.save(transportUnit);
     }
+
 }
 

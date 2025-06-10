@@ -22,7 +22,7 @@ public class FleetController {
     }
 
     // Get all fleets
-    @Operation(summary = "Obtener flotas", description = "Obtener todas las flotas") 
+    @Operation(summary = "Obtener flotas", description = "Se obtienen en una lista todas las flotas registradas")
     @GetMapping
     public ResponseEntity<List<FleetDTO>> getAllFleets() {
         return ResponseEntity.ok(fleetFacade.getAllFleets());
