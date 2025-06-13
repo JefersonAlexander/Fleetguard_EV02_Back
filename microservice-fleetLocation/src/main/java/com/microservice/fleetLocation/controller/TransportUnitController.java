@@ -3,6 +3,7 @@ package com.microservice.fleetLocation.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,6 +32,7 @@ public class TransportUnitController {
 
     // Get all transport units
     @Operation(summary = "Obtener unidades de transporte", description = "Se obtiene una lista con todas las unidades de transporte")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping 
     public ResponseEntity<List<TransportUnitDetailDTO>> getAllTransportUnits() {
         return ResponseEntity.ok(transportUnitFacade.getAllTransportUnits());
@@ -38,6 +40,7 @@ public class TransportUnitController {
 
     // Create a new transport unit
     @Operation(summary = "Crear unidad de transporte", description = "Se crea una nueva unidad de transporte")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @PostMapping("/create")
     public ResponseEntity<TransportUnitDetailDTO> createTransportUnit(@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
       
@@ -46,6 +49,7 @@ public class TransportUnitController {
 
     // Update a transport unit
     @Operation(summary = "Actualizar unidad de transporte", description = "Se actualiza una unidad de transporte existente por ID")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @PutMapping("/update/{id}")
     public ResponseEntity<TransportUnitDetailDTO> updateTransportUnit(@PathVariable Long id,@RequestBody @Validated TransportUnitDTO transportUnitDTO) {
         return ResponseEntity.ok(transportUnitFacade.updateTransportUnit(id, transportUnitDTO));
@@ -53,6 +57,7 @@ public class TransportUnitController {
 
     //Delete a transport unit logically
     @Operation(summary = "Eliminar unidad de transporte", description = "Se eliminar una unidad de transporte de forma lógica por ID")
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Void> logicallyDelete(@PathVariable Long id) {
         transportUnitFacade.logicallyDeleteTransportUnit(id);

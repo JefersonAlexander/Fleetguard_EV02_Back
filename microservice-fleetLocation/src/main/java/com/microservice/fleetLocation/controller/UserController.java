@@ -2,6 +2,7 @@ package com.microservice.fleetLocation.controller;
 
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class UserController {
 
     // Get all users
     @Operation(summary = "Obtener conductores", description = "Se obtienen en una lista todos los conductores")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COORDINATOR')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userFacade.getAllUsers());
