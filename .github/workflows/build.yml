@@ -30,7 +30,7 @@ jobs:
         run: |
           mvn -B verify sonar:sonar \
             -Dsonar.projectKey=JefersonAlexander_Fleetguard_EV02_Back \
-            -Dsonar.organization=JefersonAlexander \
+            -Dsonar.organization=jefersonalexander \  
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
         env:
