@@ -41,7 +41,7 @@ jobs:
 # 2 BUILD / PUSH / DEPLOY POR SERVICIO
 #####################################
   deploy-cloud-run:
-    needs: quality-check
+    needs: sonar-cloud
     runs-on: ubuntu-latest
     strategy:
       matrix:
