@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 ########################
-# 1) TESTS + SONARCLOUD
+# 1 TESTS + SONARCLOUD
 ########################
 jobs:
   quality-check:
