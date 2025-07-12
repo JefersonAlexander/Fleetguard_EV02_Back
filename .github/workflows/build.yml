@@ -96,7 +96,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           SERVICE=${{ matrix.service }}
-          IMAGE=jefersonalexander/${SERVICE}:latest
+          IMAGE=jefersonalexander/$(echo "$SERVICE" | tr '[:upper:]' '[:lower:]'):latest
           REGION=us-central1
           # Cloud Run exige nombres en minúsculas y sin mayúsculas
           SERVICE_CLOUDRUN=$(echo "$SERVICE" | tr '[:upper:]' '[:lower:]')
