@@ -74,25 +74,26 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
+          
       - name: Build & Push image
         run: |
           SERVICE=${{ matrix.service }}
-          IMAGE=jefersonalexander/${SERVICE}:latest
+          IMAGE_NAME=$(echo "$SERVICE" | tr '[:upper:]' '[:lower:]')
+          IMAGE=jefersonalexander/$IMAGE_NAME:latest
           docker build -t $IMAGE $SERVICE
           docker push $IMAGE
-
+      
       # ---------- GCP ----------
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
-
+      
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
-
+      
       - name: Deploy to Cloud Run
         run: |
           SERVICE=${{ matrix.service }}
