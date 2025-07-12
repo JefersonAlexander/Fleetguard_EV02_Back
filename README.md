@@ -1,3 +1,19 @@
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=bugs)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=JefersonAlexander_Fleetguard_EV02_Back&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=JefersonAlexander_Fleetguard_EV02_Back)
+
 # Fleetguard_EV02_Back
 
 Implementation of a microservices-based system with the following operations:
