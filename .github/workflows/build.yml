@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [microservice-authentication, microservice-fleetlocation, api-gateway, discovery-server]
+        service: [microservice-authentication, microservice-fleetLocation, api-gateway, discovery-server]
     environment: staging
 
     steps:
