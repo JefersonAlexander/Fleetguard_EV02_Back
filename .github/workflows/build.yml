@@ -1,0 +1,42 @@
+name: CI/CD Pipeline – Fleetguard
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+########################
+# 1) TESTS + SONARCLOUD
+########################
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: m2
+
+      - name: Unit tests
+        run: mvn -B test
+
+      - name: SonarCloud analysis
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=JefersonAlexander_Fleetguard_EV02_Back \
+            -Dsonar.organization=jefersonAlexander \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
