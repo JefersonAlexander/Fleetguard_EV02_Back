@@ -26,9 +26,6 @@ jobs:
           key: m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: m2
 
-      - name: Unit tests
-        run: mvn -B test
-
       - name: SonarCloud analysis
         run: |
           mvn -B verify sonar:sonar \
@@ -39,4 +36,3 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
