@@ -1,0 +1,49 @@
+# render.yaml - Limpio de datos sensibles
+
+services:
+  - type: web
+    name: discovery-server
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/discovery-server:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    autoDeploy: false
+
+  - type: web
+    name: microservice-authentication
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/microservice-authentication:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      
+    autoDeploy: false
+
+  - type: web
+    name: microservice-fleetLocation
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/microservice-fleetlocation:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+    autoDeploy: false
+
+  - type: web
+    name: api-gateway
+    runtime: image
+    image:
+      url: docker.io/jefersonalexander/api-gateway:latest
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      
+    autoDeploy: false
+

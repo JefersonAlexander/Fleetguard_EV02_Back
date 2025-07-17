@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-fleetlocation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-fleetlocation
+  template:
+    metadata:
+      labels:
+        app: microservice-fleetlocation
+    spec:
+      containers:
+        - name: microservice-fleetlocation
+          image: microservice-fleetlocation:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:5432/postgres
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres.qyeavxhdrnymhiieqthn
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: 944AWt.32zM
+            - name: EUREKA_URI
+              value: http://discovery-server:8761/eureka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-fleetlocation
+spec:
+  selector:
+    app: microservice-fleetlocation
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+  type: LoadBalancer
+

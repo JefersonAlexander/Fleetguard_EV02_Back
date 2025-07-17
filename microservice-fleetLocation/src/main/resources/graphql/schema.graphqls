@@ -1,0 +1,49 @@
+type TransportUnit {
+    id: ID!
+    licencePlate: String!
+    model: String!
+    capacity: Int!
+    driver: User!
+    fleet: Fleet!
+    status: TransportUnitStatus!
+    deleted: Boolean!
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+}
+
+type Fleet {
+    id: ID!
+    name: String!
+    description: String!
+}
+
+type TransportUnitStatus {
+    id: ID!
+    status: String!
+}
+
+
+input TransportUnitDTO {
+    licencePlate: String!
+    model: String!
+    capacity: Int!
+    driverId: ID!
+    fleetId: ID!
+    statusId: ID!
+}
+
+# Consultas disponibles
+type Query {
+    getAllTransportUnits: [TransportUnit!]!
+}
+
+# Mutaciones disponibles
+type Mutation {
+    createTransportUnit(transportUnitDTO: TransportUnitDTO!): TransportUnit!
+    updateTransportUnit(id: ID!, transportUnitDTO: TransportUnitDTO!): TransportUnit!
+    deleteTransportUnit(id: ID!): Boolean!
+}
